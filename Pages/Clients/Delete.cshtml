@@ -1,0 +1,24 @@
+﻿@page
+@using System.Data.SqlClient;
+@using UserRolesStatusEFCore.Data;
+
+@{
+    try
+    {
+        string id = Request.Query["id"];
+
+        using URSEFcontext context = new URSEFcontext();
+
+        //var userToDelte = context.Products.Where(p => p.Name == "Veggie Special Pizza").FirstOrDefault();
+        var userToDelete = context.Users.Where(a => a.Id == int.Parse(id)).FirstOrDefault();
+        context.Remove(userToDelete);
+        context.SaveChanges();
+    }
+    catch (Exception ex)
+    {
+
+        throw;
+    }
+
+    Response.Redirect("/Clients/ClientsIndex");
+}
